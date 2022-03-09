@@ -7,10 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import page_objects.ItemsName;
 import page_objects.SauceDemoInventoryPage;
 import page_objects.SauceDemoLoginPage;
+import util.BrowserClass;
+import util.UtilClass;
 
 public class SauceDemoTest {
 
@@ -19,9 +20,18 @@ public class SauceDemoTest {
     UtilClass utilClass;
 
 
+    /*
+    *WebDriverManager is an open-source Java library that carries out the management
+    *(i.e., download, setup, and maintenance) of the drivers required by Selenium WebDriver
+    *(e.g., chromedriver, geckodriver, msedgedriver, etc.) in a fully automated manner.
+    *In addition, WebDriverManager provides other relevant features, such as the capability
+    *to discover browsers installed in the local system, building WebDriver objects
+    *(such as ChromeDriver, FirefoxDriver, EdgeDriver, etc.).
+    * */
     @Before
     public void setUp(){
         utilClass = new UtilClass();
+        //Loading browser driver
         if(BrowserClass.BROWSER.equals("c")){
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
@@ -45,6 +55,7 @@ public class SauceDemoTest {
     @Test
     public void sauceDemoGetTest(){
         driver.get(URL);
+        //Logging current URL
         utilClass.logInfo(driver.getCurrentUrl());
     }
 
@@ -55,7 +66,7 @@ public class SauceDemoTest {
 
         SauceDemoLoginPage loginPage = new SauceDemoLoginPage(driver);
         loginPage.login("standard_user", "secret_sauce");
-
+        //Logging current URL
         utilClass.logInfo(driver.getCurrentUrl());
     }
 
@@ -68,7 +79,7 @@ public class SauceDemoTest {
 
         SauceDemoInventoryPage inventoryPage = new SauceDemoInventoryPage(driver, ItemsName.backpack);
         inventoryPage.addToCart();
-
+        //Logging current URL
         utilClass.logInfo(driver.getCurrentUrl());
     }
 
@@ -84,7 +95,7 @@ public class SauceDemoTest {
 
 
         Assert.assertTrue("Cart badge should have 1 item", inventoryPage.checkCart());
-
+        //Logging current URL
         utilClass.logInfo(driver.getCurrentUrl());
     }
 
@@ -97,7 +108,7 @@ public class SauceDemoTest {
 
         SauceDemoInventoryPage inventoryPage = new SauceDemoInventoryPage(driver, ItemsName.backpack);
         inventoryPage.openItemPage(1);
-
+        //Logging current URL
         utilClass.logInfo(driver.getCurrentUrl());
     }
 
